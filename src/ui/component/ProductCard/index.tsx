@@ -1,5 +1,6 @@
 import {Button, Card} from "react-bootstrap";
 import {GetAllProductDto} from "../../../data/product/getAllProduct.type.ts";
+import {Link} from "react-router-dom";
 
 type Props = {
     dto:GetAllProductDto
@@ -14,7 +15,11 @@ return(
                 ${dto.price.toLocaleString()}<br/>
                 {dto.hasStock ? "有貨" :"賣完了"}
             </Card.Text>
-            <Button variant="primary">Detail</Button>
+            <Link to={`/product/${dto.pid}`}>
+            <Button variant="primary">
+                Detail
+            </Button>
+            </Link>
         </Card.Body>
     </Card>
     )

@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Routes} from "react-router";
 import ProductListingPage from "./ui/page/ProductListingPage";
 import ProductDetailPage from "./ui/page/ProductDetailPage";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ErrorPage from "./ui/page/ErrorPage";
 // import ProductListing from "./ui/page/ProductListing";
 // import ProductDetail from "./ui/page/ProductDetail";
 // import ShoppingCart from "./ui/page/ShoppingCart";
@@ -27,6 +28,7 @@ createRoot(document.getElementById('root')!).render(
 {/*//         <Route path="/login" element={<LoginPage/>}/>*/}
 {/*//         <Route path="/checkout/:transactionId" element={<Checkout/>}/>*/}
 {/*//         <Route path="/thankyou" element={<ThankYou/>}/>*/}
+        <Route path="/errorpage" element={<ErrorPage/>}/>
 //     </Routes>
 // </BrowserRouter>
 

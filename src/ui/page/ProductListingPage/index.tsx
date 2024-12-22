@@ -5,6 +5,7 @@ import {GetAllProductDto} from "../../../data/product/getAllProduct.type.ts";
 import {useEffect, useState} from "react";
 import LoadingContainer from "../../component/LoadingContainer";
 import * as ProductApi from "../../../api/ProductApi.ts";
+import AdvertiseBanner from "../../component/AdvertiseBanner.tsx";
 
 export default function ProductListingPage(){
         const[dtoList,setDtoList] = useState<GetAllProductDto[] | undefined>(undefined);
@@ -22,11 +23,14 @@ export default function ProductListingPage(){
         return(
             <>
                 <TopNavBar/>
+                 <AdvertiseBanner/>
                 <Container>
                         {
+
                              (!isLoading && dtoList) ?
                             <ProductCardGrid dtoList={dtoList}/>
                              :<LoadingContainer/>
+
                         }
 
                 </Container>

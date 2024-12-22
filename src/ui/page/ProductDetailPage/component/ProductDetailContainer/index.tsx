@@ -2,15 +2,37 @@ import ProductDetailAddToCartContainer from "../ProductDetailAddToCartContainer"
 import {useEffect, useState} from "react";
 import {ProductDetailDto} from "../../../../../data/product/productDetailDto.type.ts";
 import LoadingContainer from "../../../../component/LoadingContainer";
-import mockData from "../../component/response.json"
+import * as ProductApi from "../../../../../api/ProductApi.ts"
+import {useNavigate, useParams} from "react-router-dom";
+
+type Pramas = {
+    productId :string
+}
 
 export default function ProductDetailContainer(){
+    const navigate = useNavigate()
+    const {productId} = useParams<Pramas>();
     const [dto, setDto] = useState<ProductDetailDto | undefined>(undefined)
     const[isLoading, setIsLoading] = useState<boolean>(true);
 
+    const fetchProductDetail = async () =>{
+        if(!productId) {
+            navigate("/errorpage")
+            }
+
+            try {
+                const responseData = await ProductApi.getProductDetail(productId!)
+                setDto(responseData);
+                setIsLoading(false);
+            }
+            catch{
+                navigate("/errorpage")
+            }
+   }
+
+
     useEffect(() =>{
-        setDto(mockData)
-        setIsLoading(false)
+        fetchProductDetail();
     },[]);
 
     if(isLoading || dto ===  undefined) {
@@ -28,12 +50,7 @@ export default function ProductDetailContainer(){
                 <p >{dto.description}
                 </p>
                     <ProductDetailAddToCartContainer dto={dto} />
-
                 </div>
-
             </div>
-
-
     )
-
 }
