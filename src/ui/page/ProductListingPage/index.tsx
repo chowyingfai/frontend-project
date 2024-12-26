@@ -23,8 +23,10 @@ export default function ProductListingPage(){
         return(
             <>
                 <TopNavBar/>
+                  <div style={{ marginBottom: "20px" }} >
                  <AdvertiseBanner/>
-                <Container>
+                    </div>
+                <Container >
                         {
 
                              (!isLoading && dtoList) ?

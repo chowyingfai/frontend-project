@@ -7,6 +7,7 @@ import ProductListingPage from "./ui/page/ProductListingPage";
 import ProductDetailPage from "./ui/page/ProductDetailPage";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ErrorPage from "./ui/page/ErrorPage";
+import LoginPage from "./ui/page/LoginPage";
 // import ProductListing from "./ui/page/ProductListing";
 // import ProductDetail from "./ui/page/ProductDetail";
 // import ShoppingCart from "./ui/page/ShoppingCart";
@@ -25,7 +26,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<ProductListingPage/>}/>
         <Route path="/product/:productId" element={<ProductDetailPage/>}/>
 {/*//         <Route path="/shoppingcart" element={<ShoppingCart/>}/>*/}
-{/*//         <Route path="/login" element={<LoginPage/>}/>*/}
+//         <Route path="/login" element={<LoginPage/>}/>
 {/*//         <Route path="/checkout/:transactionId" element={<Checkout/>}/>*/}
 {/*//         <Route path="/thankyou" element={<ThankYou/>}/>*/}
         <Route path="/errorpage" element={<ErrorPage/>}/>
