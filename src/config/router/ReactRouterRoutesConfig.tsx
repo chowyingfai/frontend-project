@@ -3,6 +3,7 @@ import ProductListingPage from "../../ui/page/ProductListingPage";
 import ProductDetailPage from "../../ui/page/ProductDetailPage";
 import LoginPage from "../../ui/page/LoginPage";
 import ErrorPage from "../../ui/page/ErrorPage";
+import ShoppingCartPage from "../../ui/page/ShoppingCartPage";
 
 export default function ReactRouterRoutesConfig(){
     return(
@@ -10,7 +11,7 @@ export default function ReactRouterRoutesConfig(){
             <Routes>
                 <Route path="/" element={<ProductListingPage/>}/>
                 <Route path="/product/:productId" element={<ProductDetailPage/>}/>
-                {/*//         <Route path="/shoppingcart" element={<ShoppingCart/>}/>*/}
+                <Route path="/shoppingcart" element={<ShoppingCartPage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 {/*//         <Route path="/checkout/:transactionId" element={<Checkout/>}/>*/}
                 {/*//         <Route path="/thankyou" element={<ThankYou/>}/>*/}

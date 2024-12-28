@@ -21,9 +21,11 @@ export default function TopNavBar(){
                     <Navbar.Text style={{ color: 'black' }}>
                         {loginUser.email}
                     </Navbar.Text>
+
                     <Button variant="light">
                         <FontAwesomeIcon icon={faCartShopping} beat />
                     </Button>
+
                     <Button variant="light" onClick={() =>{
                         FirebaseAuthService.signOut()
                     }} >
