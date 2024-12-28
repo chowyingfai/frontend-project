@@ -2,19 +2,37 @@ import TopNavBar from "../../component/TopNavBar";
 import Container from "react-bootstrap/Container";
 import ShoppingCartTable from "../../component/ShoppingCart/component/ShoppingCartTable.tsx";
 import {Button} from "react-bootstrap";
-import mockData from "../ShoppingCartPage/response.json"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {CartItemDto} from "../../../data/cartItem/cartItem.type.ts";
 import LoadingContainer from "../../component/LoadingContainer";
+import {LoginUserContext} from "../../../context/loginUserContext.ts";
+import * as CartItemApi from "../../../api/CartItemApi.ts";
+import {useNavigate} from "react-router-dom";
 
 export default function  ShoppingCartPage(){
+    const navigate  = useNavigate();
+    const loginUser = useContext(LoginUserContext);
     const [dtoList, setDtoList] = useState<CartItemDto[] | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const fetchUserCart =async () =>{
+       try {
+           const responseData = await CartItemApi.getUserCart();
+           setIsLoading(false);
+           setDtoList(responseData);
+       }catch{
+           navigate("/errorpage");
+       }
+    }
+
     useEffect(() =>{
-        setDtoList(mockData);
-        setIsLoading(false);
-    })
+       if(loginUser){
+           fetchUserCart();
+       }
+       else if(loginUser === null){
+           navigate("/login")
+       }
+    },[loginUser])
 
     const calTotal = (dtoList: CartItemDto[]) => {
         let total = 0; // 初始化總和變量
@@ -33,8 +51,14 @@ export default function  ShoppingCartPage(){
     // }
 
 
+
     const renderShoppingCart = () =>{
         if(!isLoading && dtoList){
+            if(dtoList.length ===0){
+                return(
+                    <h1> Your shopping cart is empty !</h1>
+                );
+            }
            return(
                <>
                    <ShoppingCartTable dtoList={dtoList}/>

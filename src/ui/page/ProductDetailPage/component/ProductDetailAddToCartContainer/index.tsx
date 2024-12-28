@@ -4,13 +4,19 @@ import {useState} from "react";
 // import propTypes = ThemeProvider.propTypes;
 // import {Props} from "@fortawesome/react-fontawesome";
 import {ProductDetailDto} from "../../../../../data/product/productDetailDto.type.ts";
+import * as CartItemApi from "../../../../../api/CartItemApi.ts";
+import {useNavigate} from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 
 type Props = {
     dto: ProductDetailDto
 }
 
 export default function ProductDetailAddToCartContainer({dto}:Props){
+    const navigate = useNavigate();
     const [quantity, setQuantity] = useState<number>(1);
+    const [isAddingToCart,setIsAddingToCart] = useState<boolean>(false);
+
 
     const handleMinus = () =>{
         if(quantity >1) {
@@ -24,14 +30,53 @@ export default function ProductDetailAddToCartContainer({dto}:Props){
 
     }
 
+    const handleAddToCart = async () =>{
+        try {
+            setIsAddingToCart(true);
+            await CartItemApi.putCartItem(dto.pid, quantity)
+            setIsAddingToCart(false);
+        }catch{
+            navigate("/errorpage");
+        }
+    }
+
+
+    const renderAddToCartButton = () =>{
+        if(dto.stock>0){
+            if(dto.stock >0){
+                if(isAddingToCart){
+                    return <Button variant="primary" disabled>
+                        <Spinner
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />
+                        現在放入購物車中... 請等候...
+                    </Button>
+                }
+            }
+            return(
+            <Button className={"d-flex justify-content-center align-items-center"}
+                    style={{ width:90 ,height:30, backgroundColor:"grey"} } onClick={handleAddToCart}>
+                購買
+            </Button>
+            );
+        }
+
+        else{
+            return(
+            <Button disabled> 無貨賣 </Button>
+            );
+        }
+    }
+
     return(
         <div className={"d-flex"}>
             <QuantitySelector quantity={quantity} handleMinus={handleMinus} handlePlus={handlePlus}/>
             <div className={"ms-3"}>
-            <Button className={"d-flex justify-content-center align-items-center"}
-                    style={{ width:90 ,height:30, backgroundColor:"grey"} }>
-                購買
-            </Button>
+                {renderAddToCartButton()}
             </div>
         </div>
     )

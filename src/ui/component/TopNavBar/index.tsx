@@ -22,17 +22,19 @@ export default function TopNavBar(){
                         {loginUser.email}
                     </Navbar.Text>
 
-                    <Button variant="light">
-                        <FontAwesomeIcon icon={faCartShopping} beat />
-                    </Button>
+                    <Link to={"/shoppingcart"}>
+                        <Button variant="light">
+                            <FontAwesomeIcon icon={faCartShopping} beat/>
+                        </Button>
+                    </Link>
 
-                    <Button variant="light" onClick={() =>{
-                        FirebaseAuthService.signOut()
-                    }} >
-                        Logout
-                    </Button>
-                </>
-            );
+                        <Button variant="light" onClick={() => {
+                            FirebaseAuthService.signOut()
+                        }}>
+                            Logout
+                        </Button>
+                    </>
+                    );
         } else if(loginUser === null){
             return (
                 <Link to="/login">
