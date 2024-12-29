@@ -9,9 +9,6 @@ export default function ProductDetailPage(){
             <TopNavBar/>
             <Container>
             <ProductDetailContainer/>
-
-
-
             </Container>
 
         </>

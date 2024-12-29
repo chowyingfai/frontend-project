@@ -3,9 +3,11 @@ import ShoppingCartTableRow from "./ShoppingCartTableRow.tsx";
 import {CartItemDto} from "../../../../data/cartItem/cartItem.type.ts";
 
 type Props ={
-    dtoList:CartItemDto[]
+    dtoList:CartItemDto[],
+    handleQuantityChange:(pid:number , quantity:number) =>void
+    handleDelete:(pid:number) => void
 }
-export default function ShoppingCartTable({dtoList}:Props){
+export default function ShoppingCartTable({dtoList,handleDelete,handleQuantityChange}:Props){
     return(
         <Table className={"align-middle"}  striped bordered hover>
             <thead>
@@ -22,7 +24,12 @@ export default function ShoppingCartTable({dtoList}:Props){
             <tbody>
             {
                dtoList.map((dto) =>(
-                    <ShoppingCartTableRow dto={dto} key={dto.pid}/>
+                    <ShoppingCartTableRow
+                        key={dto.pid}
+                        dto={dto}
+                        handleQuantityChange={handleQuantityChange}
+                        handleDelete={handleDelete}
+                    />
                     ))
             }
 

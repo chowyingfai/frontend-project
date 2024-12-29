@@ -16,6 +16,8 @@ export default function ProductDetailAddToCartContainer({dto}:Props){
     const navigate = useNavigate();
     const [quantity, setQuantity] = useState<number>(1);
     const [isAddingToCart,setIsAddingToCart] = useState<boolean>(false);
+    // eslint-disable-next-line no-empty-pattern
+    const[isSuccess,setIsSuccess] = useState<boolean>(false);
 
 
     const handleMinus = () =>{
@@ -35,6 +37,10 @@ export default function ProductDetailAddToCartContainer({dto}:Props){
             setIsAddingToCart(true);
             await CartItemApi.putCartItem(dto.pid, quantity)
             setIsAddingToCart(false);
+            setIsSuccess(true);
+            setTimeout(() =>{
+                setIsSuccess(false);
+            },7000)
         }catch{
             navigate("/errorpage");
         }
@@ -43,6 +49,11 @@ export default function ProductDetailAddToCartContainer({dto}:Props){
 
     const renderAddToCartButton = () =>{
         if(dto.stock>0){
+            if(isSuccess){
+                return(
+                    <Button variant={"success"} disabled> 已添加購物車中 </Button>
+                );
+            }
             if(dto.stock >0){
                 if(isAddingToCart){
                     return <Button variant="primary" disabled>
@@ -67,7 +78,7 @@ export default function ProductDetailAddToCartContainer({dto}:Props){
 
         else{
             return(
-            <Button disabled> 無貨賣 </Button>
+                <Button disabled> 無貨賣 </Button>
             );
         }
     }

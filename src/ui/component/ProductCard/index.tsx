@@ -16,8 +16,9 @@ return(
                 {dto.hasStock ? "有貨" :"賣完了"}
             </Card.Text>
             <Link to={`/product/${dto.pid}`}>
-            <Button variant="primary">
-                Detail
+            {/*<Button variant="primary">*/}
+            <Button  variant="primary"  style={{ backgroundColor: 'pink', color: 'black' }}>
+                《 貨品詳情 》
             </Button>
             </Link>
         </Card.Body>

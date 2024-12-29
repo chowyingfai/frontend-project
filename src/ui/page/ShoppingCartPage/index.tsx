@@ -25,6 +25,26 @@ export default function  ShoppingCartPage(){
        }
     }
 
+    const handleQuantityChange = (pid:number , quantity:number) =>{
+       setDtoList(
+        dtoList?.map((dto) =>{
+            if(dto.pid === pid){
+                dto.cartQuantity = quantity
+            }
+            return dto;
+        })
+       )
+    }
+
+    const handleDelete = (pid:number) =>{
+        setDtoList(
+            dtoList?.filter((dto) =>(
+                dto.pid !== pid
+            ))
+        )
+    }
+
+
     useEffect(() =>{
        if(loginUser){
            fetchUserCart();
@@ -61,7 +81,10 @@ export default function  ShoppingCartPage(){
             }
            return(
                <>
-                   <ShoppingCartTable dtoList={dtoList}/>
+                   <ShoppingCartTable
+                       handleDelete={handleDelete}
+                       handleQuantityChange={handleQuantityChange}
+                       dtoList={dtoList}/>
                    <div className={"d-flex justify-content-end"}>
                      <td>
                       <h2>Total : ${calTotal(dtoList).toLocaleString()}</h2>

@@ -13,9 +13,25 @@ export async function getUserCart(){
 }
 
 export async function putCartItem(pid:number , quantity:number){
-    await axios.put(`
-    ${baseUrl}/cart/${pid}/${quantity}`,
+    await axios.put(
+        `${baseUrl}/cart/${pid}/${quantity}`,
     undefined,
     await FirebaseAuthService.getAuthConfig()
+    )
+}
+
+export async function patchCartItemQuantity(pid:number , quantity:number){
+await axios.patch(
+    `${baseUrl}/cart/${pid}/${quantity}`,
+    undefined,
+    await FirebaseAuthService.getAuthConfig()
+)
+}
+
+
+export async function deleteCartItem(pid:number){
+    await axios.delete(
+        `${baseUrl}/cart/${pid}`,
+        await FirebaseAuthService.getAuthConfig()
     )
 }
