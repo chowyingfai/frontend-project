@@ -7,6 +7,7 @@ import {CartItemDto} from "../../../data/cartItem/cartItem.type.ts";
 import LoadingContainer from "../../component/LoadingContainer";
 import {LoginUserContext} from "../../../context/loginUserContext.ts";
 import * as CartItemApi from "../../../api/CartItemApi.ts";
+import * as TransactionApi from "../../../api/TransactionApi.ts";
 import {useNavigate} from "react-router-dom";
 
 export default function  ShoppingCartPage(){
@@ -14,6 +15,9 @@ export default function  ShoppingCartPage(){
     const loginUser = useContext(LoginUserContext);
     const [dtoList, setDtoList] = useState<CartItemDto[] | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isChecking, setIsChecking] = useState<boolean>(false);
+
+
 
     const fetchUserCart =async () =>{
        try {
@@ -44,6 +48,15 @@ export default function  ShoppingCartPage(){
         )
     }
 
+    const handleCheckout  =async ()  =>{
+        try {
+            setIsChecking(true);
+            const responseData = await TransactionApi.postTransaction();
+            navigate(`/checkout/${responseData.tid}`);
+        }catch{
+            navigate(`/errorPage`)
+        }
+    }
 
     useEffect(() =>{
        if(loginUser){
@@ -88,7 +101,7 @@ export default function  ShoppingCartPage(){
                    <div className={"d-flex justify-content-end"}>
                      <td>
                       <h2>Total : ${calTotal(dtoList).toLocaleString()}</h2>
-                      <Button variant={"success"}><h4>確定付款！</h4></Button>
+                      <Button disabled={isChecking} onClick={handleCheckout} variant={"success"}><h4>確定付款！</h4></Button>
                      </td>
                  </div>
                </>
