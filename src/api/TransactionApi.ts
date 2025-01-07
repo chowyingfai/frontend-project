@@ -1,8 +1,10 @@
 import axios from "axios";
 import {TransactionDto} from "../data/transaction/transactionDto.type.ts";
 import * as FirebaseAuthService from "../authService/FirebaseAuthService.ts"
+import getEnvConfig from "../config/EnvConfig.ts";
 
-const baseUrl = "http://localhost:8080";
+
+const baseUrl = getEnvConfig().baseUrl;
 
 export async function getTransactionByTid(tid:string){
     const response = await axios.get<TransactionDto>(
